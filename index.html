@@ -88,6 +88,42 @@
   .more .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.9375rem; }
   .ext { display: inline-block; margin-top: 0.3rem; font-size: 0.9375rem; }
 
+  /* Interests – a bit more playful */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 0.75rem 1rem;
+    margin: 0.5rem 0 0.25rem;
+  }
+  .interest-card {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 0.9rem 1rem 0.85rem;
+    transition: border-color 0.15s ease, transform 0.1s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .interest-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .interest-emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 0.15rem;
+  }
+  .interest-label {
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .interest-note {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
   .contact-text { max-width: 33rem; margin: 0 0 0.75rem; }
   .contact-line { margin: 0 0 0.35rem; }
   .muted { color: var(--muted); }
@@ -98,6 +134,7 @@
     .page { padding-top: 2.5rem; }
     h1 { font-size: 1.75rem; }
     .entry { grid-template-columns: 1fr; row-gap: 0.05rem; margin-bottom: 1.25rem; }
+    .interests-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -129,6 +166,12 @@
     <section id="events">
       <h2>Events and insights</h2>
       <ol class="list" id="events-list"></ol>
+    </section>
+
+    <!-- NEW: Interests section -->
+    <section id="interests">
+      <h2>Interests</h2>
+      <div class="interests-grid" id="interests-grid"></div>
     </section>
 
     <section id="awards">
@@ -330,6 +373,25 @@ const SITE = {
     }
   ],
 
+  /* NEW: Interests – guitar, football, poker */
+  interests: [
+    {
+      emoji: "🎸",
+      label: "Guitar",
+      note: "Fingerstyle and blues improvisation. Always learning a new piece."
+    },
+    {
+      emoji: "⚽",
+      label: "Football",
+      note: "Midfield playmaker. Follow the Premier League closely."
+    },
+    {
+      emoji: "♠️",
+      label: "Poker",
+      note: "Tournament and cash games. Strategy meets probability."
+    }
+  ],
+
   awards: [
     { lead: "Top 5", title: "IMC Trading Algothon", sub: "Algorithmic and quantitative problem solving" },
     { lead: "1 of 50", title: "AWS Spring Insight Programme", sub: "Selected nationally to explore cloud infrastructure and engineering practice" },
@@ -444,6 +506,17 @@ SITE.projects.forEach((g) => {
 
 SITE.research.forEach((r) => $("research-list").appendChild(entry({ ...r, ext: r.links && r.links[0] })));
 SITE.events.forEach((e) => $("events-list").appendChild(entry(e)));
+
+/* NEW: Build Interests cards */
+const grid = $("interests-grid");
+SITE.interests.forEach((item) => {
+  const card = h("div", "interest-card");
+  card.appendChild(h("span", "interest-emoji", item.emoji));
+  card.appendChild(h("span", "interest-label", item.label));
+  if (item.note) card.appendChild(h("span", "interest-note", item.note));
+  grid.appendChild(card);
+});
+
 SITE.awards.forEach((a) => {
   $("award-list").appendChild(entry({ ...a, lead: null }));
 });
