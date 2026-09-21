@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lakshay Bansal</title>
+<meta name="description" content="Lakshay Bansal. Master student in Computing at Imperial College London.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B1B1B'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='600'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --ink: #1B1B1B;
+    --muted: #6A6A6A;
+    --rule: #E4E4E4;
+    --accent: #2B4C9B;
+    --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414; --ink: #E9E9E9; --muted: #9A9A9A; --rule: #2A2A2A; --accent: #8FA8E8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414; --ink: #E9E9E9; --muted: #9A9A9A; --rule: #2A2A2A; --accent: #8FA8E8;
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+  [hidden] { display: none !important; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 40rem; margin: 0 auto; padding: 4rem 1.5rem 3rem; }
+
+  a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: var(--muted); }
+  a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* Intro */
+  h1 { margin: 0; font-size: 2rem; font-weight: 600; line-height: 1.2; }
+  .bio { margin: 0.9rem 0 0; max-width: 33rem; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+
+  /* Sections */
+  section { margin-top: 3.25rem; }
+  h2 { margin: 0 0 1rem; font-size: 1rem; font-weight: 600; }
+  h3 { margin: 1.75rem 0 0.75rem; font-size: 0.9375rem; font-weight: 500; color: var(--muted); }
+  h3:first-of-type { margin-top: 0; }
+
+  /* Entries: date on the left, content on the right */
+  .list { list-style: none; margin: 0; padding: 0; }
+  .entry { display: grid; grid-template-columns: 7rem 1fr; column-gap: 1rem; margin-bottom: 1.1rem; }
+  .entry.no-when { grid-template-columns: 1fr; }
+  .when { color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; padding-top: 0.05rem; }
+  .t { display: block; font-weight: 500; }
+  .s { display: block; color: var(--muted); }
+  .list.quiet .t { font-weight: 400; }
+  .list.quiet .s { font-size: 0.9375rem; }
+
+  details summary { list-style: none; cursor: pointer; position: relative; padding-right: 1.75rem; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: "+"; position: absolute; right: 0; top: 0; color: var(--muted); }
+  details[open] summary::after { content: "\2212"; }
+  details summary:hover .t { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+
+  .more { margin-top: 0.7rem; }
+  .more p { margin: 0 0 0.6rem; }
+  .more .meta { color: var(--muted); font-size: 0.9375rem; }
+  .more ul { margin: 0 0 0.7rem; padding-left: 1.1rem; list-style: disc; }
+  .more li { margin-bottom: 0.45rem; }
+  .more li::marker { color: var(--muted); }
+  .more .stack { color: var(--muted); font-size: 0.9375rem; }
+  .more .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.9375rem; }
+  .ext { display: inline-block; margin-top: 0.3rem; font-size: 0.9375rem; }
+
+  .contact-text { max-width: 33rem; margin: 0 0 0.75rem; }
+  .contact-line { margin: 0 0 0.35rem; }
+  .muted { color: var(--muted); }
+
+  footer { margin-top: 4rem; color: var(--muted); font-size: 0.9375rem; }
+
+  @media (max-width: 34rem) {
+    .page { padding-top: 2.5rem; }
+    h1 { font-size: 1.75rem; }
+    .entry { grid-template-columns: 1fr; row-gap: 0.05rem; margin-bottom: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1 id="name"></h1>
+    <p class="bio" id="bio"></p>
+    <ul class="contact-links" id="top-links" aria-label="Links"></ul>
+  </header>
+
+  <main>
+    <section id="experience">
+      <h2>Experience</h2>
+      <ol class="list" id="exp-list"></ol>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div id="proj-groups"></div>
+    </section>
+
+    <section id="research">
+      <h2>Research</h2>
+      <ol class="list" id="research-list"></ol>
+    </section>
+
+    <section id="events">
+      <h2>Events and insights</h2>
+      <ol class="list" id="events-list"></ol>
+    </section>
+
+    <section id="awards">
+      <h2>Awards</h2>
+      <ol class="list quiet" id="award-list"></ol>
+    </section>
+
+    <section id="writing">
+      <h2>Writing</h2>
+      <ol class="list" id="writing-list"></ol>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="contact-text" id="contact-text"></p>
+      <p class="contact-line"><a id="email" href="#"></a></p>
+      <p class="contact-line muted" id="place"></p>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+/* ==============================================================
+   EDIT THIS BLOCK. Everything on the page comes from here.
+   - An item with `points` gets a + to expand it.
+   - `tags` shows as a plain list of tools. `links` adds links.
+============================================================== */
+const SITE = {
+  name: "Lakshay Bansal",
+  bio: [
+    "Year 3 Computing (AI and ML) Master Student at Imperial. Currently interested in production LLM systems, compilers, and quantitative trading."
+  ],
+  cv: { label: "Download CV", url: "" },   // paste a link to your CV PDF here to show the button
+
+  experience: [
+    {
+      lead: "Jul–Aug 2026",
+      title: "Golborne Capital",
+      sub: "AI Software Engineer Intern",
+      meta: "July to August 2026 · London, UK",
+      points: [
+        "Owned the design, build and deployment of three production LLM systems for a private-credit investment team of 40+ stakeholders: an LLM-powered CRM, a deal database with LLM-driven similarity ranking, and automated intelligence monitors.",
+        "Built an email-to-database pipeline using Claude for schema-validated structured extraction from meeting notes and attachments (PDF, Excel, Word, images), with human-in-the-loop review. Added a grounded RAG chatbot over the data using embeddings, keyword retrieval and an agentic tool loop, cutting manual information gathering by over half.",
+        "Consolidated 15+ private-credit deals, investor meetings, documents and counterparty information into a single internal platform, and wrote Python pipelines to extract, transform and validate 1000+ heterogeneous financial documents.",
+        "Evaluated every LLM component against a partner-curated gold question set using LLM-as-judge. Tiered Haiku and Sonnet where quality matched, and added prompt caching and the Batch API, cutting inference cost by about 50%.",
+        "Shipped monitors that aggregate multilingual news, sanctions lists (OFAC, OFSI, UN, EU) and company registries across 75+ companies, with Claude-scored RED alerts sent to partners twice daily. Automated 40% of previously manual processing overall."
+      ],
+      tags: ["Claude API", "RAG", "FastAPI", "PostgreSQL", "pytest", "CI/CD"]
+    },
+    {
+      lead: "Jun–Aug 2025",
+      title: "Stealth Startup",
+      sub: "Software Engineering Intern",
+      meta: "June to August 2025"
+    },
+    {
+      lead: "2024 to 28",
+      title: "Imperial College London",
+      sub: "MEng Computing (AI and ML)",
+      meta: "Graduating June 2028 · London, UK",
+      points: [
+        "Coursework: Machine Learning, Data Structures and Algorithms, Operating Systems, Networks, Databases.",
+        "Google Developer Student Club: Secretary, organising technical workshops and peer-led software sessions.",
+        "DoCSoc: IC Hack organiser."
+      ]
+    }
+  ],
+
+  events: [
+    {
+      lead: "May–Jun 2025",
+      title: "Optiver",
+      sub: "Trading Academy",
+      meta: "May to June 2025 · London, UK",
+      points: [
+        "Designed and backtested a market-making strategy in Python on simulated limit-order-book data, placing in the top 10 of 40+ teams.",
+        "Built pricing and inventory logic driven by order flow and volatility, improving simulated P&L by 18% over the baseline strategy.",
+        "Tuned risk parameters (position limits and quote skew), reducing maximum drawdown by 25% while maintaining fill rate."
+      ],
+      tags: ["Python", "Market making", "Backtesting"]
+    },
+    {
+      lead: "Apr 2026",
+      title: "Y Combinator",
+      sub: "Startup School"
+    },
+    {
+      lead: "Apr 2025",
+      title: "Amazon Web Services",
+      sub: "Insight Event"
+    }
+  ],
+
+  projects: [
+    {
+      group: "Applications",
+      items: [
+        {
+          title: "TETHER",
+          lead: "May–Jun 2026",
+          meta: "May to June 2026",
+          blurb: "Multi-device productivity app for university students.",
+          points: [
+            "Led the end-to-end design of a multi-device productivity system. Ran user surveys, behavioural interviews, stakeholder mapping and iterative usability tests to find out why existing social-media blockers are easy to bypass.",
+            "Built a gamified intervention that combines graduated friction, social accountability and rewards, and refined it across several prototypes using user feedback. Developed the Android, desktop, browser-extension and backend components.",
+            "Evaluated four weeks of in-app usage: distractions during study hours fell by 38%, uninterrupted focus sessions grew 2.1x longer, and 30-day retention reached 64%."
+          ],
+          tags: ["Kotlin", "React", "Node/Express", "PostgreSQL", "AWS EC2", "WebSockets"]
+        },
+        {
+          title: "GroupMind",
+          lead: "Feb 2025",
+          meta: "February 2025",
+          blurb: "AI-powered digital personas that bring online communities to life.",
+          points: [
+            "Built an app that brings online communities to life with AI-powered digital personas.",
+            "Created in a hackathon setting and presented to 100+ users."
+          ]
+        }
+      ]
+    },
+    {
+      group: "Systems and compilers",
+      items: [
+        {
+          title: "WACC Compiler",
+          lead: "Mar 2026",
+          meta: "March 2026",
+          blurb: "End-to-end compiler for the C-like WACC language, with an ARM64 backend.",
+          points: [
+            "Wrote the compiler in Scala: lexing, parsing, AST construction and semantic validation using Parsley parser combinators.",
+            "Implemented a three-address-code intermediate representation with control-flow graphs, and ARM64 code generation that supports ABI conventions, stack frames, register saves and restores, and runtime checks.",
+            "Optimised generated code with graph-colouring register allocation (using liveness analysis) and tail-recursion transformation, and added extensions such as function overloading.",
+            "Wrote a lightweight interpreter to validate semantics and act as an oracle for compiler output, backed by extensive unit and golden tests across parsing, typing, IR and code generation, with automated builds in CI."
+          ],
+          tags: ["Scala", "ARM64", "TAC IR", "Parsley"]
+        },
+        {
+          title: "C Emulator, Assembler and FFT Visualizer",
+          lead: "Jul 2025",
+          meta: "July 2025",
+          blurb: "CPU emulator and assembler in C, plus a Fourier-transform signal visualizer.",
+          points: [
+            "Developed a CPU emulator and assembler capable of processing 500+ instructions with minimal memory overhead.",
+            "Built a signal analysis pipeline that uses the Fast Fourier Transform to turn time-series audio signals into frequency-domain insights.",
+            "Evaluated system performance and stability across varying resolutions and datasets."
+          ],
+          tags: ["C", "Assembler", "Emulator", "FFT"]
+        },
+        {
+          title: "PintOS",
+          lead: "Dec 2025",
+          meta: "December 2025",
+          blurb: "Extended an educational operating-system kernel.",
+          points: [
+            "Implemented MLFQS scheduling, priority donation, synchronisation primitives, system calls, ELF loading, and demand paging with supplemental page tables and clock-style eviction.",
+            "Debugged concurrent kernel code with GDB and targeted stress tests, resolving race conditions across multi-threaded execution."
+          ],
+          tags: ["C", "x86", "GDB", "Multithreading"]
+        }
+      ]
+    }
+  ],
+
+  research: [
+    {
+      title: "A Video Analysis System Using K-Nearest Neighbour Algorithm for Error Detection in Squat Form",
+      sub: "First author, IEEE International Conference on Computer Science and Emerging Technologies (CSET)",
+      points: [
+        "Independently conceived the project and identified the problem: incorrect exercise form can slow recovery and raise injury risk in physiotherapy.",
+        "Built an end-to-end computer-vision pipeline (Python, MediaPipe Pose, OpenCV) that extracts joint positions and angles from physiotherapy video to detect errors such as incorrect knee and hip alignment.",
+        "Curated and labelled a patient exercise dataset with trained physiotherapists, engineered temporal features from skeletal keypoints, and tuned a KNN classifier.",
+        "Designed the full workflow from data preprocessing to model evaluation, reaching 92% accuracy across 50+ subjects, evaluated on a held-out test set.",
+        "Deployed the model on low-spec hardware for practical real-time analysis."
+      ],
+      tags: ["Python", "PyTorch", "OpenCV", "MediaPipe Pose", "KNN"],
+      links: [{ label: "Read on IEEE Xplore", url: "https://ieeexplore.ieee.org/document/10346607" }]
+    },
+    {
+      title: "Analysis of the play of permutations and combinations in constructing Melakarta ragas, and how music scales are rank ordered in Carnatic music",
+      sub: "Combinatorics and Carnatic music",
+      points: [
+        "Analysed how permutations and combinations shape the construction of Melakarta ragas and the rank ordering of musical scales.",
+        "Revealed connections between mathematics and music, echoing Pythagoras' influence."
+      ],
+      tags: ["Combinatorics", "Carnatic music"]
+    },
+    {
+      title: "A predictive model to estimate out-of-pocket healthcare expenditures",
+      sub: "Comparing polynomial and random forest regression",
+      points: [
+        "Ran a comparative study of degree-3 polynomial regression and random forest regression for estimating out-of-pocket (OOP) healthcare expenditures.",
+        "Evaluated the models with mean absolute error, mean squared error, root mean squared error (RMSE) and R-squared.",
+        "Concluded the study with a regression model that predicts out-of-pocket healthcare expenditures."
+      ],
+      tags: ["Polynomial regression", "Random forest", "RMSE", "R-squared"]
+    }
+  ],
+
+  awards: [
+    { lead: "Top 5", title: "IMC Trading Algothon", sub: "Algorithmic and quantitative problem solving" },
+    { lead: "1 of 50", title: "AWS Spring Insight Programme", sub: "Selected nationally to explore cloud infrastructure and engineering practice" },
+    { lead: "Top 0.2%", title: "Joint Entrance Examination (IIT)", sub: "India's largest engineering exam, with over 1M candidates" },
+    { lead: "1 of 1000+", title: "Mathematician of the Year", sub: "ABWA Infinity, advanced category, across India" },
+    { lead: "Top 200", title: "Sir Isaac Newton Exam", sub: "Certificate of Distinction, among the top 200 contestants in the world" },
+    { lead: "Top scorer", title: "Regional Mathematics Olympiad", sub: "35 marks, on the Indian pathway to the IMO" },
+    { lead: "Rank 2", title: "SASMO", sub: "Gold Award and National Rank 2 out of 2300+ students" },
+    { lead: "Qualifier", title: "AIME", sub: "American Invitational Mathematics Examination" },
+    { lead: "Rank 1", title: "International Olympiad of Science", sub: "Silverzone, international rank 1 with 100/100" },
+    { lead: "Champion", title: "International Math Olympiad Challenge", sub: "Scored 94/100" }
+  ],
+
+  writing: [],   // add posts as { lead: "", title: "...", sub: "...", url: "..." } and the section appears
+  writingAll: "",
+
+  contact: {
+    text: "I'm happy to talk about AI systems, compilers, quantitative problems, or anything that looks hard enough to be interesting. Email is the fastest way to reach me.",
+    email: "lbansal.284@gmail.com",
+    place: "Based in London, UK.",
+    links: [
+      { label: "LinkedIn", url: "https://www.linkedin.com/in/lakshay-bansal-49b8b4310/" },
+      { label: "Email",    url: "mailto:lbansal.284@gmail.com" }
+      // { label: "GitHub", url: "https://github.com/your-handle" },
+    ]
+  }
+};
+/* ============================================================== */
+
+const $ = (id) => document.getElementById(id);
+const isWeb = (u) => /^https?:/.test(u);
+function h(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function link(l) {
+  const a = h("a", null, l.label);
+  a.href = l.url;
+  if (isWeb(l.url)) { a.target = "_blank"; a.rel = "noopener"; }
+  return a;
+}
+
+/* One entry: optional date, title, subtitle, and an optional expandable body */
+function entry(e) {
+  const li = h("li", "entry" + (e.lead == null ? " no-when" : ""));
+  if (e.lead != null) li.appendChild(h("span", "when", e.lead));
+
+  const what = h("div");
+  const expandable = (e.points && e.points.length) || e.body;
+
+  const head = (tag) => {
+    const el = h(tag);
+    el.appendChild(h("span", "t", e.title));
+    if (e.sub) el.appendChild(h("span", "s", e.sub));
+    return el;
+  };
+
+  if (expandable) {
+    const d = h("details");
+    d.appendChild(head("summary"));
+    const more = h("div", "more");
+    if (e.meta) more.appendChild(h("p", "meta", e.meta));
+    if (e.body) more.appendChild(h("p", null, e.body));
+    if (e.points && e.points.length) {
+      const ul = h("ul");
+      e.points.forEach((t) => ul.appendChild(h("li", null, t)));
+      more.appendChild(ul);
+    }
+    if (e.tags && e.tags.length) more.appendChild(h("p", "stack", e.tags.join(", ")));
+    if (e.links && e.links.length) {
+      const p = h("p", "links");
+      e.links.forEach((l) => p.appendChild(link(l)));
+      more.appendChild(p);
+    }
+    d.appendChild(more);
+    what.appendChild(d);
+  } else {
+    what.appendChild(head("div"));
+  }
+
+  if (e.ext) {
+    const a = link(e.ext);
+    a.className = "ext";
+    what.appendChild(a);
+  }
+  li.appendChild(what);
+  return li;
+}
+
+/* Intro */
+document.title = SITE.name;
+$("name").textContent = SITE.name;
+SITE.bio.forEach((t, i) => { if (i === 0) $("bio").textContent = t; });
+
+const topLinksEl = $("top-links");
+const topLinks = [];
+if (SITE.cv.url) topLinks.push({ label: "CV", url: SITE.cv.url });
+SITE.contact.links.forEach((l) => topLinks.push(l));
+topLinks.forEach((l) => { const li = h("li"); li.appendChild(link(l)); topLinksEl.appendChild(li); });
+
+/* Sections */
+SITE.experience.forEach((e) => $("exp-list").appendChild(entry(e)));
+
+SITE.projects.forEach((g) => {
+  $("proj-groups").appendChild(h("h3", null, g.group));
+  const ol = h("ol", "list");
+  g.items.forEach((p) => ol.appendChild(entry({ ...p, sub: p.blurb, lead: p.lead || "" })));
+  $("proj-groups").appendChild(ol);
+});
+
+SITE.research.forEach((r) => $("research-list").appendChild(entry({ ...r, ext: r.links && r.links[0] })));
+SITE.events.forEach((e) => $("events-list").appendChild(entry(e)));
+SITE.awards.forEach((a) => $("award-list").appendChild(entry(a)));
+
+if (SITE.writing.length === 0) {
+  $("writing").hidden = true;
+} else {
+  SITE.writing.forEach((w) => $("writing-list").appendChild(entry({ lead: w.lead, title: w.title, sub: w.sub, ext: { label: "Read", url: w.url } })));
+}
+
+/* Contact */
+$("contact-text").textContent = SITE.contact.text;
+$("email").textContent = SITE.contact.email;
+$("email").href = "mailto:" + SITE.contact.email;
+$("place").textContent = SITE.contact.place;
+
+$("footer").textContent = "© " + new Date().getFullYear() + " " + SITE.name;
+</script>
+</body>
+</html>
