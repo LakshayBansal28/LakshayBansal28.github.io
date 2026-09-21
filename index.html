@@ -444,7 +444,9 @@ SITE.projects.forEach((g) => {
 
 SITE.research.forEach((r) => $("research-list").appendChild(entry({ ...r, ext: r.links && r.links[0] })));
 SITE.events.forEach((e) => $("events-list").appendChild(entry(e)));
-SITE.awards.forEach((a) => $("award-list").appendChild(entry(a)));
+SITE.awards.forEach((a) => {
+  $("award-list").appendChild(entry({ ...a, lead: null }));
+});
 
 if (SITE.writing.length === 0) {
   $("writing").hidden = true;
